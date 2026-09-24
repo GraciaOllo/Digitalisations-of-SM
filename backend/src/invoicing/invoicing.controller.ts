@@ -12,7 +12,7 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiTags, ApiQuery } from '@nestjs/swagger';
 import { InvoicingService } from './invoicing.service';
 import { CreateInvoiceDto, UpdateInvoiceDto } from './dto/create-invoice.dto';
-import { CreateCustomerDto } from './dto/create-customer.dto';
+import { CreateCustomerDto, UpdateCustomerDto } from './dto/create-customer.dto';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Permissions } from '../common/decorators/permissions.decorator';
 import { Permission } from '../common/constants/permissions.constant';
@@ -49,7 +49,7 @@ export class InvoicingController {
 
   @Patch('customers/:id')
   @Permissions(Permission.CRM_UPDATE)
-  updateCustomer(@CurrentUser() user: any, @Param('id') id: string, @Body() dto: CreateCustomerDto) {
+  updateCustomer(@CurrentUser() user: any, @Param('id') id: string, @Body() dto: UpdateCustomerDto) {
     return this.service.updateCustomer(user.companyId, id, dto);
   }
 

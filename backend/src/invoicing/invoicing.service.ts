@@ -9,7 +9,7 @@ import { Model, Types } from 'mongoose';
 import { Invoice, InvoiceDocument, InvoiceType, InvoiceStatus } from './schemas/invoice.schema';
 import { Customer, CustomerDocument } from './schemas/customer.schema';
 import { CreateInvoiceDto, UpdateInvoiceDto } from './dto/create-invoice.dto';
-import { CreateCustomerDto } from './dto/create-customer.dto';
+import { CreateCustomerDto, UpdateCustomerDto } from './dto/create-customer.dto';
 
 @Injectable()
 export class InvoicingService {
@@ -44,7 +44,7 @@ export class InvoicingService {
     return customer;
   }
 
-  async updateCustomer(companyId: string, id: string, dto: CreateCustomerDto) {
+  async updateCustomer(companyId: string, id: string, dto: UpdateCustomerDto) {
     const customer = await this.customerModel.findOneAndUpdate(
       { _id: id, companyId: new Types.ObjectId(companyId), isDeleted: false },
       dto,

@@ -37,3 +37,13 @@ export class CreateCustomerDto {
   @IsString()
   taxId?: string;
 }
+
+export class UpdateCustomerDto {
+  @IsOptional() @IsString() @IsNotEmpty() name?: string;
+  @IsOptional() @IsEmail() email?: string;
+  @IsOptional() @IsString() phone?: string;
+  @IsOptional() @IsString() address?: string;
+  @IsOptional() @IsString() city?: string;
+  @IsOptional() @IsEnum(['individual', 'company']) type?: string;
+  @IsOptional() @IsString() taxId?: string;
+}
