@@ -6,6 +6,8 @@ type User = {
   firstName: string;
   lastName: string;
   email: string;
+  phone?: string;
+  companyName?: string;
   role: string;
   permissions: string[];
 };
@@ -15,6 +17,7 @@ type AuthState = {
   refreshToken: string | null;
   user: User | null;
   setSession: (data: { accessToken: string; refreshToken: string; user: User }) => void;
+  updateUser: (data: Partial<User>) => void;
   logout: () => void;
 };
 
@@ -29,6 +32,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     localStorage.setItem('kodo_user', JSON.stringify(data.user));
     set(data);
   },
+
+  updateUser: (data) => set((state) => {
+    if (!state.user) return state;
+    const user = { ...state.user, ...data };
+    localStorage.setItem('kodo_user', JSON.stringify(user));
+    return { user };
+  }),
 
   logout: () => {
     localStorage.removeItem('kodo_access_token');

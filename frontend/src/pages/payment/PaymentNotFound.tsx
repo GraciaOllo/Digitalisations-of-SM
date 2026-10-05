@@ -1,13 +1,22 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, CreditCard } from 'lucide-react';
+import { ArrowLeft, CreditCard, Languages } from 'lucide-react';
 
 export default function PaymentNotFound() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isEnglish = i18n.language.startsWith('en');
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+    <div className="relative min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+      <button
+        onClick={() => i18n.changeLanguage(isEnglish ? 'fr' : 'en')}
+        title={isEnglish ? 'Passer en français' : 'Switch to English'}
+        aria-label={isEnglish ? 'Passer en français' : 'Switch to English'}
+        className="absolute right-5 top-5 inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold uppercase text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+      >
+        <Languages size={15} />{isEnglish ? 'FR' : 'EN'}
+      </button>
       <div className="w-full max-w-md text-center">
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30">
           <CreditCard className="h-10 w-10 text-emerald-600 dark:text-emerald-400" />

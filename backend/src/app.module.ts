@@ -14,6 +14,9 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { StockModule } from './stock/stock.module';
 import { EmployeesModule } from './employees/employees.module';
 import { HealthModule } from './health/health.module';
+import { OperationsModule } from './operations/operations.module';
+import { CRMModule } from './crm/crm.module';
+import { HRModule } from './hr/hr.module';
 
 @Module({
   imports: [
@@ -26,6 +29,9 @@ import { HealthModule } from './health/health.module';
     DashboardModule,
     StockModule,
     EmployeesModule,
+    OperationsModule,
+    CRMModule,
+    HRModule,
     HealthModule,
   ],
   providers: [

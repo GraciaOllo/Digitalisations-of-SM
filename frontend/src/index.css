@@ -2,9 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; }
-body { margin: 0; background: #f8fafc; }
+:root {
+  --brand-50: #f0fdfa;
+  --brand-100: #ccfbf1;
+  --brand-500: #0f766e;
+  --brand-600: #115e59;
+  --brand-700: #134e4a;
+  font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(15, 118, 110, 0.12), transparent 35%),
+    #f8fafc;
+}
+
+#root { min-height: 100vh; }
 * { box-sizing: border-box; }
-.field { border: 1px solid #cbd5e1; border-radius: 0.75rem; background: white; padding: 0.65rem 0.8rem; font-size: 0.875rem; outline: none; }
-.field:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgb(16 185 129 / 0.15); }
-.label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; }
+
+.field {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  background: white;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.875rem;
+  outline: none;
+  color: #0f172a;
+}
+
+.field:focus {
+  border-color: var(--brand-600);
+  box-shadow: 0 0 0 3px rgba(17, 94, 89, 0.12);
+}
+
+.dark .field {
+  background: #0f172a;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+.dark .field::placeholder {
+  color: #94a3b8;
+}
+
+.label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.dark body {
+  background:
+    radial-gradient(circle at top, rgba(15, 118, 110, 0.08), transparent 30%),
+    #020817;
+}
+
+.bg-emerald-50 { background-color: var(--brand-50) !important; }
+.bg-emerald-100 { background-color: rgba(15, 118, 110, 0.10) !important; }
+.bg-emerald-500 { background-color: var(--brand-500) !important; }
+.bg-emerald-600 { background-color: var(--brand-600) !important; }
+.text-emerald-500, .text-emerald-600, .text-emerald-700 { color: var(--brand-600) !important; }
+.border-emerald-200 { border-color: rgba(15, 118, 110, 0.25) !important; }
+.hover\:bg-emerald-50:hover { background-color: var(--brand-50) !important; }
+.hover\:border-emerald-200:hover { border-color: rgba(15, 118, 110, 0.25) !important; }
+.from-emerald-600 { --tw-gradient-from: var(--brand-600) !important; }
+.via-emerald-500 { --tw-gradient-via: var(--brand-500) !important; }
+
+button, a { transition: all 0.2s ease; }
+
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .receipt-print {
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+  }
+}
+

@@ -1,4 +1,4 @@
-import { IsArray, IsEmail, IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsArray, IsEmail, IsEnum, IsNumber, IsOptional, IsString, Min, MinLength } from 'class-validator';
 import { UserRole } from '../../common/constants/roles.constant';
 
 export class CreateEmployeeDto {
@@ -8,6 +8,7 @@ export class CreateEmployeeDto {
   @IsString() @MinLength(8) password!: string;
   @IsOptional() @IsEnum(UserRole) role?: UserRole;
   @IsOptional() @IsArray() @IsString({ each: true }) permissions?: string[];
+  @IsOptional() @IsNumber() @Min(0) hourlyRate?: number;
 }
 
 export class UpdateEmployeeDto {
@@ -16,4 +17,12 @@ export class UpdateEmployeeDto {
   @IsOptional() @IsEnum(UserRole) role?: UserRole;
   @IsOptional() @IsArray() @IsString({ each: true }) permissions?: string[];
   @IsOptional() isActive?: boolean;
+  @IsOptional() @IsNumber() @Min(0) hourlyRate?: number;
+}
+
+export class UpdateOwnProfileDto {
+  @IsOptional() @IsString() firstName?: string;
+  @IsOptional() @IsString() lastName?: string;
+  @IsOptional() @IsEmail() email?: string;
+  @IsOptional() @IsString() phone?: string;
 }

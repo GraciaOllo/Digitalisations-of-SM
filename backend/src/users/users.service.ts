@@ -69,12 +69,61 @@ export class UsersService {
       .lean();
   }
 
-  async updateCompanyUser(companyId: string, userId: string, data: Partial<Pick<User, 'firstName' | 'lastName' | 'role' | 'permissions' | 'isActive'>>) {
+  async getOwnProfile(companyId: string, userId: string) {
+    const user = await this.userModel.findOne({
+      _id: userId,
+      companyId: new Types.ObjectId(companyId),
+      isDeleted: false,
+    }).select('-password -refreshTokenHash').lean();
+    if (!user) throw new NotFoundException('Employee not found');
+    return user;
+  }
+
+  async updateOwnProfile(companyId: string, userId: string, data: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+  }) {
+    const companyObjectId = new Types.ObjectId(companyId);
+    const update = { ...data };
+    if (data.email) {
+      update.email = data.email.toLowerCase().trim();
+      const duplicate = await this.userModel.findOne({
+        _id: { $ne: userId },
+        companyId: companyObjectId,
+        email: update.email,
+        isDeleted: false,
+      });
+      if (duplicate) throw new ConflictException('Email already exists');
+    }
+
+    const user = await this.userModel.findOneAndUpdate(
+      { _id: userId, companyId: companyObjectId, isDeleted: false },
+      { $set: update },
+      { new: true, runValidators: true },
+    ).select('-password -refreshTokenHash');
+    if (!user) throw new NotFoundException('Employee not found');
+    return user;
+  }
+
+  async updateCompanyUser(companyId: string, userId: string, data: Partial<Pick<User, 'firstName' | 'lastName' | 'role' | 'permissions' | 'isActive' | 'hourlyRate'>>) {
     const user = await this.userModel.findOneAndUpdate(
       { _id: userId, companyId: new Types.ObjectId(companyId), isDeleted: false },
       data,
       { new: true, runValidators: true },
     ).select('-password -refreshTokenHash');
+    if (!user) throw new NotFoundException('Employee not found');
+    return user;
+  }
+
+  async findActiveCompanyUser(companyId: string, userId: string) {
+    const user = await this.userModel.findOne({
+      _id: userId,
+      companyId: new Types.ObjectId(companyId),
+      isDeleted: false,
+      isActive: true,
+    }).select('_id firstName lastName email role hourlyRate').lean();
     if (!user) throw new NotFoundException('Employee not found');
     return user;
   }

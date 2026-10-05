@@ -12,6 +12,8 @@ export class User {
   @Prop({ required: true, trim: true }) firstName!: string;
   @Prop({ required: true, trim: true }) lastName!: string;
   @Prop({ required: true, lowercase: true, trim: true }) email!: string;
+  @Prop({ trim: true }) phone?: string;
+  @Prop({ min: 0, default: 0 }) hourlyRate!: number;
   @Prop({ required: true }) password!: string;
 
   @Prop({ enum: UserRole, default: UserRole.EMPLOYEE })
